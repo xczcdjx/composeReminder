@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">androidRemind</string>
+<!--    数字占位-->
+    <string name="word_count">%d/10</string>
+    <string name="instructions">guess word</string>
+    <string name="wrong_guess">word error</string>
+    <string name="enter_your_word">Enter your word</string>
+    <string name="submit">Submit</string>
+    <string name="skip">Skip</string>
+    <string name="score">Score: %d</string>
+    <string name="play_again">play again</string>
+    <string name="your_score">Your score: %d</string>
+    <string name="congratulations">Congratulations</string>
+    <string name="exit">Exit</string>
 </resources>

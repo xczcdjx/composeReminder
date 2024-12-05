@@ -1,4 +1,4 @@
-package com.compose.androidremind.category
+package com.compose.androidremind.buildInstance.todo
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
@@ -18,7 +18,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -36,21 +35,25 @@ import java.util.Date
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun TodoTestOptimize() {
-    var text by remember { mutableStateOf("") }
-    val list = remember {
-        mutableStateListOf(
-            TodoCls("1001", "吃饭2", false),
-            TodoCls("1002", "睡觉", true),
-            TodoCls("1003", "打豆豆", false)
+fun TodoTest() {
+    var text by remember { mutableStateOf("") }/*val list = remember {
+        mutableListOf<TodoCls>(listOf())
+    }*/
+    var list by remember {
+        mutableStateOf(
+            listOf(
+                TodoCls("1001", "吃饭2", false),
+                TodoCls("1002", "睡觉", true),
+                TodoCls("1003", "打豆豆", false)
+            )
         )
     }
 
     fun checkDuplicate(it2: String): Boolean {
 //        val c=list.map { it.name }.contains(it)
-        val c = list.find { it.name == it2 }
+        val c=list.find { it.name==it2 }
         println("c$c")
-        return c == null
+        return c==null
     }
     Column(
         modifier = Modifier
@@ -80,32 +83,24 @@ fun TodoTestOptimize() {
                 TextButton(onClick = {
                     if (text.isNotEmpty() && checkDuplicate(text))
 //                        list += TodoCls(Date().time.toString(), text, false)
-                        list.add(0, TodoCls(Date().time.toString(), text, false))
-                    text = ""
+                        list=listOf(TodoCls(Date().time.toString(), text, false))+list
+                    text=""
                 }) {
                     Text("Add")
                 }
             }
             LazyColumn {
-                items(list.size) { ri ->
-                    val l = list[ri]
+                items(list.size){
+                    ri->
+                    val l=list[ri]
                     ListItem(headlineContent = {
                         Text(l.name)
                     }, trailingContent = {
-                        Checkbox(checked = l.f, onCheckedChange = { cf ->
-                            // 该方法无效
-                           /* list.forEach {
-                                if (it.id == l.id) it.f = cf
+                        Checkbox(checked = l.f, onCheckedChange = {
+                            list = list.mapIndexed { ci, l2 ->
+                                if (ri == ci) l2.copy(f = it)
+                                else l2
                             }
-                            println("list $list")*/
-                            // 直接匹配当前索引修改
-//                            list[ri]=list[ri].copy(f=cf)
-                            // id查找修改
-                            val index=list.indexOfFirst { l.id==it.id }
-                            if (index!=-1){
-                                list[index]=list[index].copy(f=cf)
-                            }
-                            println("list ${list.joinToString()}")
                         })
                     })
                 }
@@ -114,7 +109,8 @@ fun TodoTestOptimize() {
         Row {
             Text("总数 ${list.size}")
             Spacer(modifier = Modifier.width(20.dp))
-            val doneNum = list.fold(0) { acc, todo -> acc + if (todo.f) 1 else 0 }
+            val doneNum = list.fold(0) {
+                acc,todo -> acc+if (todo.f) 1 else 0 }
 //            val count=list.count { it.f }
             Text("已完成 $doneNum")
         }

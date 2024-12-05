@@ -12,8 +12,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.compose.androidremind.category.TodoTest
-import com.compose.androidremind.category.TodoTestOptimize
+import com.compose.androidremind.buildInstance.game.GameScreen
+import com.compose.androidremind.buildInstance.mvi.Edit
+import com.compose.androidremind.buildInstance.mvi.MviRouter
+import com.compose.androidremind.buildInstance.todo.TodoTestModel
 import com.compose.androidremind.ui.theme.AndroidRemindTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,15 +24,24 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidRemindTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    /*Greeting(
+                /*Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    *//*Greeting(
                         name = "Android",
                         modifier = Modifier.padding(innerPadding)
-                    )*/
-                    Spacer(modifier = Modifier.padding(innerPadding))
+                    )*//*
+                    *//*Column {
+                        Spacer(modifier = Modifier.padding(innerPadding))
 //                    TodoTest()
-                    TodoTestOptimize()
-                }
+//                        TodoTestOptimize()
+                        FlowLayoutTest()
+                        Spacer(modifier = Modifier.height(10.dp))
+                        StateTest()
+                    }*//*
+                    Spacer(modifier = Modifier.padding(innerPadding))
+//                    GameScreen()
+                    TodoTestModel()
+                }*/
+                MviRouter()
             }
         }
     }
