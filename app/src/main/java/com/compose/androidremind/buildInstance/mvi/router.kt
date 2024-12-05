@@ -15,16 +15,20 @@ fun MviRouter() {
             Edit(){
                 p->
                 Log.i("router params",p?:"")
-                control.navigate(MviRoutes.Control.name)
+                control.navigate(MviRoutes.Control(p).name)
             }
         }
-        composable(MviRoutes.Control.name) {
-            Control()
+        composable(MviRoutes.Control("{${Params.Id.key}}").name) {backStackEntry->
+            val id=backStackEntry.arguments?.getString(Params.Id.key)
+            Control(id)
         }
     }
 }
 
 sealed class MviRoutes(val name: String) {
     data object Edit : MviRoutes("Edit")
-    data object Control : MviRoutes("Control")
+    data class Control(val id:String?) : MviRoutes("Control/$id")
+}
+sealed class Params(val key:String){
+    object Id:Params("id")
 }
