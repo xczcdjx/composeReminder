@@ -14,7 +14,7 @@ fun MviRouter() {
         composable(MviRoutes.Edit.name) {
             Edit(){
                 p->
-                Log.i("router params",p)
+                Log.i("router params",p?:"")
                 control.navigate(MviRoutes.Control.name)
             }
         }

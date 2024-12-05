@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.compose.androidremind.buildInstance.mvi.entity.Todo
 import com.compose.androidremind.buildInstance.mvi.service.TodoAbsCls
+import com.compose.androidremind.buildInstance.mvi.service.TodoDao
 import com.compose.androidremind.buildInstance.mvi.service.TodoService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -22,15 +23,16 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class EditViewModel(app:Application) : AndroidViewModel(app) {
+class EditViewModel(dao: TodoDao) : ViewModel() {
     private val _uiState = MutableStateFlow(
         mutableListOf<Todo>()
     )
     val uiState: StateFlow<List<Todo>> = _uiState.asStateFlow()
     var loading by mutableStateOf(true)
     // 数据持久化
-    private val db= TodoAbsCls.getInstance(app.applicationContext)
-    private val service= TodoService(db.dao())
+    /*private val db= TodoAbsCls.getInstance(app.applicationContext)
+    private val service= TodoService(db.dao())*/
+    private val service=TodoService(dao)
     /*var toastState by mutableStateOf<String>("")
         private set*/
     // 使用MutableSharedFlow
@@ -41,15 +43,16 @@ class EditViewModel(app:Application) : AndroidViewModel(app) {
         viewModelScope.launch {
 //            delay(2000)
             withContext(Dispatchers.IO){
-                Thread.sleep(2000)
+                Thread.sleep(500)
             }
-            loading=false
+            loading=true
             /*_uiState.value= mutableListOf(
                 Todo("1001", "吃饭2", false),
                 Todo("1002", "睡觉", true),
                 Todo("1003", "打豆豆", false)
             )*/
             _uiState.value=service.getAll().toMutableList()
+            loading=false
         }
     }
     fun update(i: Int, f: Boolean) {

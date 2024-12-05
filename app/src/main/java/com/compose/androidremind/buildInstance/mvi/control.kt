@@ -11,23 +11,27 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.compose.androidremind.buildInstance.mvi.factory.TodoViewModelFactory
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Control(modifier: Modifier = Modifier, vm: ControlViewmodel = viewModel()) {
+fun Control(modifier: Modifier = Modifier) {
+    val ctx= LocalContext.current
+    val vm: ControlViewmodel = viewModel(factory = TodoViewModelFactory(ctx))
     Scaffold(topBar = {
         TopAppBar(title = {
             Text("Control")
         }, actions = {
             TextButton(onClick = {
-
+                vm.onSave()
             }) {
                 Text("Save")
             }
         })
     }) { pad ->
 //        Spacer(modifier.padding(pad))
-        TextField(vm.textV, { vm.updateTextV(it) }, modifier = modifier.padding(pad).fillMaxSize())
+        TextField(vm.textV.name, { vm.updateTextV(it) }, modifier = modifier.padding(pad).fillMaxSize())
     }
 }

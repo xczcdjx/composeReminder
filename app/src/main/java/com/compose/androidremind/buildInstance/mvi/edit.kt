@@ -4,6 +4,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -37,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.compose.androidremind.buildInstance.mvi.factory.TodoViewModelFactory
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 
@@ -44,7 +46,9 @@ import kotlinx.coroutines.flow.collect
 @Composable
 // viewmodel 需要用到context,如果通过直接实例化ViewModel传入LocalContext.current 会导致state失效
 // 解决办法: 1.使用AndroidViewModel,2.通过viewModelProvider.Factory 构造 ViewModel,3.通过Hilt依赖注入
-fun Edit(modifier: Modifier = Modifier, vm: EditViewModel = viewModel(),goC:(String)->Unit) {
+fun Edit(modifier: Modifier = Modifier,goC:(String?)->Unit) {
+    val ctx= LocalContext.current
+    val vm: EditViewModel = viewModel(factory = TodoViewModelFactory(ctx))
     val editUiState by vm.uiState.collectAsState()
     Scaffold(topBar = {
         TopAppBar(title = {
@@ -52,7 +56,7 @@ fun Edit(modifier: Modifier = Modifier, vm: EditViewModel = viewModel(),goC:(Str
         })
     }, floatingActionButton = {
         IconButton(onClick = {
-            goC("")
+            goC(null)
         }) {
             Icon(Icons.Default.Add, null)
         }
@@ -65,7 +69,7 @@ fun Edit(modifier: Modifier = Modifier, vm: EditViewModel = viewModel(),goC:(Str
         ) {
             Text("no data")
         }*/
-        val ctx= LocalContext.current
+//        val ctx= LocalContext.current
         val toast=vm.toast
         val lifecycleOwner= LocalLifecycleOwner.current
         LaunchedEffect(Unit) {
@@ -99,8 +103,12 @@ fun Edit(modifier: Modifier = Modifier, vm: EditViewModel = viewModel(),goC:(Str
                 ) {
                     LazyColumn {
                         items(editUiState, key = { it.id }) { cur ->
-                            ListItem(headlineContent = {
+                            ListItem(modifier = modifier.clickable {
+                                goC(cur.id)
+                            }, headlineContent = {
                                 Text(cur.name)
+                            }, supportingContent = {
+                                Text(cur.time?:"")
                             }, trailingContent = {
                                 Checkbox(cur.f, { f ->
 //                            f->
