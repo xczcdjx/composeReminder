@@ -9,11 +9,11 @@ import com.compose.androidremind.buildInstance.mvi.entity.Todo
 @Dao
 interface TodoDao {
     @Query("select * from todo")
-    fun getAll():List<Todo>
+    suspend fun getAll():List<Todo>
     @Query("select * from todo where id=:id")
-    fun findById(id:String):Todo
+    suspend fun findById(id:String):Todo
     @Insert
-    fun insert(todo: Todo)
+    suspend fun insert(todo: Todo)
     @Update
-    fun update(todo:Todo)
+    suspend fun update(todo:Todo)
 }

@@ -42,6 +42,8 @@ import kotlinx.coroutines.flow.collect
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
+// viewmodel 需要用到context,如果通过直接实例化ViewModel传入LocalContext.current 会导致state失效
+// 解决办法: 1.使用AndroidViewModel,2.通过viewModelProvider.Factory 构造 ViewModel,3.通过Hilt依赖注入
 fun Edit(modifier: Modifier = Modifier, vm: EditViewModel = viewModel(),goC:(String)->Unit) {
     val editUiState by vm.uiState.collectAsState()
     Scaffold(topBar = {

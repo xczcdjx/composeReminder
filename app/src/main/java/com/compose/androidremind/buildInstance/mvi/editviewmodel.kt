@@ -10,6 +10,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.compose.androidremind.buildInstance.mvi.entity.Todo
+import com.compose.androidremind.buildInstance.mvi.service.TodoAbsCls
+import com.compose.androidremind.buildInstance.mvi.service.TodoService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -27,8 +29,8 @@ class EditViewModel(app:Application) : AndroidViewModel(app) {
     val uiState: StateFlow<List<Todo>> = _uiState.asStateFlow()
     var loading by mutableStateOf(true)
     // 数据持久化
-//    private val db=TodoAbsCls.getInstance(app.applicationContext)
-//    private val service=TodoService(db.dao())
+    private val db= TodoAbsCls.getInstance(app.applicationContext)
+    private val service= TodoService(db.dao())
     /*var toastState by mutableStateOf<String>("")
         private set*/
     // 使用MutableSharedFlow
@@ -47,7 +49,7 @@ class EditViewModel(app:Application) : AndroidViewModel(app) {
                 Todo("1002", "睡觉", true),
                 Todo("1003", "打豆豆", false)
             )*/
-//            _uiState.value=service.getAll().toMutableList()
+            _uiState.value=service.getAll().toMutableList()
         }
     }
     fun update(i: Int, f: Boolean) {
