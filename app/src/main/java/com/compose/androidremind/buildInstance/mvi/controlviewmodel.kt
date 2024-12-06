@@ -20,17 +20,17 @@ class ControlViewmodel(private val dao: TodoDao):ViewModel() {
     var textV by mutableStateOf(Todo("",""))
         private set
     fun fetchData(id:String?){
-        /*if (!id.isNullOrEmpty()){
+        if (!id.isNullOrEmpty()){
             viewModelScope.launch {
                 textV= service.findById(id)
                 println(textV)
             }
-        }*/
-        viewModelScope.launch {
+        }
+        /*viewModelScope.launch {
             id?.let {
                 textV=service.findById(it)
             }
-        }
+        }*/
     }
     fun updateTextV(t:String){
         textV=textV.copy(name = t)

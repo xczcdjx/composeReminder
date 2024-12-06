@@ -2,7 +2,6 @@ package com.compose.androidremind.buildInstance.mvi
 
 import android.util.Log
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -20,14 +19,14 @@ fun MviRouter() {
         }
         composable(MviRoutes.Control("{${Params.Id.key}}").name) {backStackEntry->
             val id=backStackEntry.arguments?.getString(Params.Id.key)
-            Control(id)
+            Control(if (id == "null") null else id)
         }
     }
 }
 
 sealed class MviRoutes(val name: String) {
     data object Edit : MviRoutes("Edit")
-    data class Control(val id:String?) : MviRoutes("Control/$id")
+    data class Control(val id: String?) : MviRoutes("Control/${id}?")
 }
 sealed class Params(val key:String){
     object Id:Params("id")
