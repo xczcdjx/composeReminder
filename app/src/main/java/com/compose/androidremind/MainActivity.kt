@@ -16,6 +16,7 @@ import com.compose.androidremind.buildInstance.game.GameScreen
 import com.compose.androidremind.buildInstance.mvi.Edit
 import com.compose.androidremind.buildInstance.mvi.MviRouter
 import com.compose.androidremind.buildInstance.todo.TodoTestModel
+import com.compose.androidremind.storage.dataStore.DataStoreDemo
 import com.compose.androidremind.ui.theme.AndroidRemindTheme
 
 class MainActivity : ComponentActivity() {
@@ -41,7 +42,8 @@ class MainActivity : ComponentActivity() {
 //                    GameScreen()
                     TodoTestModel()
                 }*/
-                MviRouter()
+//                MviRouter()
+                DataStoreDemo()
             }
         }
     }
