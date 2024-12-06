@@ -8,6 +8,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -26,9 +28,25 @@ fun CdnUi(modifier: Modifier = Modifier, vm: cdnViewModel = viewModel()) {
             Text("Retrofix")
         })
     }) {
+        val f = vm.form
         Column(modifier.padding(it)) {
             Text("cdn Type")
             val list = vm.uiState.collectAsState()
+            for ((k, _) in f) {
+                TextField(prefix = {
+                    Text(k)
+                }, value = f[k]!!, onValueChange = { v -> vm.update(k, v) })
+            }
+            /*f.forEach{
+                TextField(prefix = {
+                    Text(it.key)
+                }, value = f[it.key]!!, onValueChange = { v -> vm.update(it.key, v) })
+            }*/
+            TextButton({
+                println(f)
+            }) {
+                Text("提交表单")
+            }
             LazyColumn {
                 items(list.value, { k -> k.id }) { c ->
                     ListItem(leadingContent = {
