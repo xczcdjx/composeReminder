@@ -89,4 +89,19 @@ dependencies {
 
     // DataStore
     implementation("androidx.datastore:datastore-preferences:1.1.1")
+
+    // 网络请求
+    // https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit
+    val retrofit="2.11.0"
+    implementation("com.squareup.retrofit2:retrofit:$retrofit")
+//    implementation("com.squareup.retrofit2:converter-gson:$retrofit") // 二选一即可
+    implementation("com.squareup.retrofit2:converter-moshi:$retrofit")
+    implementation("com.squareup.moshi:moshi-kotlin:1.15.1")
+
+    // 使用okhttp 请求及日志
+    // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    // https://mvnrepository.com/artifact/com.squareup.okhttp3/logging-interceptor
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+
 }
