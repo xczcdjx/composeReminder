@@ -12,7 +12,6 @@ class cdnViewModel : ViewModel() {
     private val service = cdnService.instance()
     suspend fun fetch() {
         val res = service.cdn()
-        println(res)
         if (res.code == 200) {
             _uiState.value=res.data.toMutableList()
         } else {
