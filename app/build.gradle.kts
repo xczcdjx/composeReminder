@@ -1,7 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id("com.google.devtools.ksp") version "1.9.0-1.0.13"
+    id("com.google.devtools.ksp")
+
 }
 
 android {
@@ -78,7 +79,7 @@ dependencies {
     implementation("androidx.room:room-runtime:$room_version")
     // See Add the KSP plugin to your project
     ksp("androidx.room:room-compiler:$room_version")
-
+//    annotationProcessor("androidx.room:room-compiler:$room_version")
     // If this project only uses Java source, use the Java annotationProcessor
     // No additional plugins are necessary
     annotationProcessor("androidx.room:room-compiler:$room_version")
@@ -104,4 +105,8 @@ dependencies {
     // https://mvnrepository.com/artifact/com.squareup.okhttp3/logging-interceptor
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
+    // hilt
+    val hilt = "2.50"
+    implementation("com.google.dagger:hilt-android:$hilt")
+    ksp("com.google.dagger:hilt-compiler:$hilt")
 }
