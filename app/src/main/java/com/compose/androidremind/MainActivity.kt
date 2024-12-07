@@ -12,6 +12,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.compose.androidremind.advance.shareviewmodel.ShareModel
+import com.compose.androidremind.advance.shareviewmodel.ShareModelCompositionLocal
 import com.compose.androidremind.buildInstance.game.GameScreen
 import com.compose.androidremind.buildInstance.mvi.Edit
 import com.compose.androidremind.buildInstance.mvi.MviRouter
@@ -45,7 +47,9 @@ class MainActivity : ComponentActivity() {
                 }*/
 //                MviRouter()
 //                DataStoreDemo()
-                CdnUi()
+//                CdnUi()
+//                ShareModel()
+                ShareModelCompositionLocal()
             }
         }
     }
