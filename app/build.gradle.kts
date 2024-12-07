@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("com.google.devtools.ksp")
-
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -106,7 +106,10 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
     // hilt
-    val hilt = "2.50"
+    val hilt = "2.51.1"
     implementation("com.google.dagger:hilt-android:$hilt")
     ksp("com.google.dagger:hilt-compiler:$hilt")
+
+    // https://mvnrepository.com/artifact/androidx.hilt/hilt-navigation-compose
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 }
