@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.compose.androidremind.advance.hilt.HiltShareModel
 import com.compose.androidremind.advance.shareviewmodel.ShareModel
 import com.compose.androidremind.advance.shareviewmodel.ShareModelCompositionLocal
 import com.compose.androidremind.buildInstance.game.GameScreen
@@ -21,7 +22,9 @@ import com.compose.androidremind.buildInstance.todo.TodoTestModel
 import com.compose.androidremind.net.retrofit.CdnUi
 import com.compose.androidremind.storage.dataStore.DataStoreDemo
 import com.compose.androidremind.ui.theme.AndroidRemindTheme
-
+import dagger.hilt.android.AndroidEntryPoint
+// 注入hilt
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +52,8 @@ class MainActivity : ComponentActivity() {
 //                DataStoreDemo()
 //                CdnUi()
 //                ShareModel()
-                ShareModelCompositionLocal()
+//                ShareModelCompositionLocal()
+                HiltShareModel()
             }
         }
     }
